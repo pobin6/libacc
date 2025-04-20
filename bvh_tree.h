@@ -399,6 +399,10 @@ BVHTree<IdxType, Vec3fType>::intersect(Ray ray, Hit * hit_ptr) const {
             }
         } else {
             if (intersect(ray, node_id, &hit)) {
+                if (hit_ptr == nullptr)
+                {
+                    return true;
+                }
                 ray.tmax = hit.t;
             }
 
@@ -408,9 +412,7 @@ BVHTree<IdxType, Vec3fType>::intersect(Ray ray, Hit * hit_ptr) const {
     }
 
     if (hit.t < inf) {
-        if (hit_ptr != nullptr) {
-            *hit_ptr = hit;
-        }
+        *hit_ptr = hit;
         return true;
     } else {
         return false;
